@@ -1,4 +1,8 @@
 // ---------- Cart helpers ----------
+// ---------- Backend config — SWAP THESE once your friend gives you real values ----------
+const API_BASE_URL = 'https://your-backend-url.example.com'; // TODO: replace
+const RAZORPAY_KEY_ID = 'rzp_test_XXXXXXXXXXXX'; // TODO: replace with her public key ID
+const DEMO_MODE = true; // TODO: set to false once the real backend is connected
 function getCart() {
   const data = localStorage.getItem('kk-cart');
   return data ? JSON.parse(data) : [];
@@ -111,3 +115,100 @@ function renderCheckoutSummary() {
 }
 
 renderCheckoutSummary();
+// ---------- Handle checkout form submit ----------
+const checkoutForm = document.getElementById('checkout-form');
+
+if (checkoutForm) {
+  checkoutForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const statusEl = document.getElementById('checkout-status');
+    const payButton = document.getElementById('pay-button');
+    const cart = getCart();
+
+    if (cart.length === 0) {
+      statusEl.textContent = 'Your bag is empty.';
+      return;
+    }
+
+    const customer = {
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      address: document.getElementById('address').value
+    };
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+    payButton.disabled = true;
+    statusEl.textContent = 'Creating your order...';
+
+    try {
+      if (DEMO_MODE) {
+        // ---- Fake a short delay, then simulate success ----
+        await new Promise(resolve => setTimeout(resolve, 1200));
+        statusEl.textContent = 'Payment successful (demo mode). Order placed!';
+        saveCart([]);
+        updateCartCount();
+        return;
+      }
+
+      // ---- Call 1: create the order on the real backend ----
+      const orderRes = await fetch(`${API_BASE_URL}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ customer, items: cart, total })
+      });
+
+      if (!orderRes.ok) throw new Error('Could not create order');
+      const orderData = await orderRes.json();
+
+      // ---- Open Razorpay's payment popup ----
+      const rzp = new Razorpay({
+        key: RAZORPAY_KEY_ID,
+        order_id: orderData.razorpayOrderId,
+        amount: total * 100, // Razorpay expects amount in paise
+        currency: 'INR',
+        name: 'Kaarigar Katha',
+        handler: async function (response) {
+          statusEl.textContent = 'Confirming payment...';
+
+          // ---- Call 2: confirm payment on the backend ----
+          const confirmRes = await fetch(`${API_BASE_URL}/api/orders/${orderData.orderId}/confirm`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(response)
+          });
+
+          if (confirmRes.ok) {
+            statusEl.textContent = 'Payment successful! Order placed.';
+            saveCart([]);
+            updateCartCount();
+          } else {
+            statusEl.textContent = 'Payment received, but confirmation failed. Contact support.';
+          }
+        },
+        prefill: { name: customer.name, contact: customer.phone }
+      });
+
+      rzp.open();
+      statusEl.textContent = '';
+
+    } catch (err) {
+      statusEl.textContent = 'Something went wrong. Please try again.';
+    } finally {
+      payButton.disabled = false;
+    }
+  });
+}
+// ---------- Highlight the current page in the nav ----------
+function highlightActiveNav() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    const linkPage = link.getAttribute('href').split('#')[0];
+    if (linkPage === currentPage) {
+      link.classList.add('active-link');
+    }
+  });
+}
+
+highlightActiveNav();
