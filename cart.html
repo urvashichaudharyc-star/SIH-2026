@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Bag — Kaarigar Katha</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Kaarigar Katha</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="cart.html" id="cart-link">Bag (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <section id="cart-header">
+    <h1>Your bag</h1>
+  </section>
+
+  <section id="cart-section">
+    <div id="cart-items"></div>
+
+    <div id="cart-empty" style="display:none;">
+      <p>Your bag is empty.</p>
+      <a href="shop.html" class="btn-primary">Browse the shop</a>
+    </div>
+
+    <div id="cart-summary" style="display:none;">
+      <div class="summary-row">
+        <span>Total</span>
+        <span id="cart-total">₹0</span>
+      </div>
+      <a href="checkout.html" class="btn-primary">Proceed to checkout</a>
+    </div>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>
