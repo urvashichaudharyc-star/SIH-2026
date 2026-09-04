@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Kaarigar Katha</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Kaarigar Katha</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="cart.html" id="cart-link">Bag (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <section id="checkout-header">
+    <h1>Checkout</h1>
+  </section>
+
+  <section id="checkout-section">
+    <form id="checkout-form">
+      <h2>Delivery details</h2>
+
+      <label for="name">Full name</label>
+      <input type="text" id="name" required>
+
+      <label for="phone">Phone number</label>
+      <input type="tel" id="phone" required>
+
+      <label for="address">Delivery address</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <div id="checkout-summary">
+        <h2>Order summary</h2>
+        <div id="checkout-items"></div>
+        <div class="summary-row">
+          <span>Total</span>
+          <span id="checkout-total">₹0</span>
+        </div>
+      </div>
+
+      <button type="submit" id="pay-button">Pay now</button>
+      <p id="checkout-status"></p>
+    </form>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>
