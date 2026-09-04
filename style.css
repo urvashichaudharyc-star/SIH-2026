@@ -495,3 +495,46 @@ footer {
   border-bottom: 2px solid var(--turmeric);
   padding-bottom: 4px;
 }
+/* ---------- Camera section ---------- */
+#add-product-header {
+  text-align: center;
+  padding-top: 4rem;
+}
+
+#camera-section {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#camera-preview,
+#captured-photo {
+  width: 100%;
+  border-radius: 4px;
+  background: var(--indigo);
+  margin-bottom: 1.5rem;
+}
+
+#camera-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+#camera-controls button {
+  background: var(--madder);
+  color: var(--cotton);
+  padding: 0.8rem 1.6rem;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+#camera-controls button:hover {
+  background: #8F3A2F;
+}
+
+#camera-status {
+  margin-top: 1rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
