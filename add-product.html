@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add a Product — Swadeshi Bazaar</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Swadeshi Bazaar</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="add-product.html" class="active-link">Add Product</a></li>
+      <li><a href="cart.html" id="cart-link">Bag (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <section id="add-product-header">
+    <h1>Add a new product</h1>
+    <p>Snap a photo — we'll help with the rest.</p>
+  </section>
+
+  <section id="camera-section">
+    <video id="camera-preview" autoplay playsinline></video>
+    <canvas id="photo-canvas" style="display:none;"></canvas>
+    <img id="captured-photo" style="display:none;" alt="Captured product photo">
+
+    <div id="camera-controls">
+      <button id="start-camera">Open camera</button>
+      <button id="capture-photo" style="display:none;">Capture</button>
+      <button id="retake-photo" style="display:none;">Retake</button>
+    </div>
+
+    <p id="camera-status"></p>
+  </section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
