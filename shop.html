@@ -15,6 +15,7 @@
       <li><a href="shop.html">Shop</a></li>
       <li><a href="explore.html">Explore</a></li>
       <li><a href="cart.html" id="cart-link">Bag (<span id="cart-count">0</span>)</a></li>
+      <li id="auth-nav-item"><a href="login.html">Log in</a></li>
     </ul>
   </nav>
 
@@ -22,41 +23,25 @@
     <h1>Fresh from the workshops this week</h1>
     <p>Every piece here is signed by the hand that made it.</p>
   </section>
+    <section id="shop-filters">
+    <input type="text" id="search-input" placeholder="Search products...">
 
-  <section id="shop-grid">
-    <div class="product-grid">
+    <select id="filter-region">
+      <option value="">All regions</option>
+      <option value="Rajasthan">Rajasthan</option>
+      <option value="Telangana">Telangana</option>
+      <option value="Karnataka">Karnataka</option>
+    </select>
 
-      <article class="product-card" data-id="1" data-name="Jaipur blue pottery lamp" data-price="2850">
-        <div class="product-media">🏺</div>
-        <h3>Jaipur blue pottery lamp</h3>
-        <p class="product-origin">Jaipur, Rajasthan</p>
-        <div class="product-footer">
-          <span class="product-price">₹2,850</span>
-          <button class="add-to-bag">Add to bag</button>
-        </div>
-      </article>
+    <select id="sort-price">
+      <option value="">Sort by</option>
+      <option value="low-high">Price: Low to High</option>
+      <option value="high-low">Price: High to Low</option>
+    </select>
+  </section>
 
-      <article class="product-card" data-id="2" data-name="Pochampally ikat dupatta" data-price="2200">
-        <div class="product-media">🧣</div>
-        <h3>Pochampally ikat dupatta</h3>
-        <p class="product-origin">Bhoodan Pochampally, Telangana</p>
-        <div class="product-footer">
-          <span class="product-price">₹2,200</span>
-          <button class="add-to-bag">Add to bag</button>
-        </div>
-      </article>
-
-      <article class="product-card" data-id="3" data-name="Channapatna wooden toy train" data-price="890">
-        <div class="product-media">🚂</div>
-        <h3>Channapatna wooden toy train</h3>
-        <p class="product-origin">Channapatna, Karnataka</p>
-        <div class="product-footer">
-          <span class="product-price">₹890</span>
-          <button class="add-to-bag">Add to bag</button>
-        </div>
-      </article>
-
-    </div>
+   <section id="shop-grid">
+    <div class="product-grid" id="product-grid-container"></div>
   </section>
 
   <script src="main.js"></script>
