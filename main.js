@@ -3,6 +3,7 @@
 const API_BASE_URL = 'https://your-backend-url.example.com'; // TODO: replace
 const RAZORPAY_KEY_ID = 'rzp_test_XXXXXXXXXXXX'; // TODO: replace with her public key ID
 const DEMO_MODE = true; // TODO: set to false once the real backend is connected
+let selectedRole = 'buyer'; // shared across tab-switching and login/signup
 // ---------- Product data (temporary — will move to backend later) ----------
 const PRODUCTS = [
   {
@@ -420,8 +421,6 @@ if (submitProductBtn) {
 const authTabs = document.querySelectorAll('.auth-tab');
 
 if (authTabs.length > 0) {
-  let selectedRole = 'buyer'; // default
-
   authTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       authTabs.forEach(t => t.classList.remove('active-tab'));
@@ -461,8 +460,8 @@ if (loginForm) {
 
     await new Promise(resolve => setTimeout(resolve, 800));
 
-    const email = document.getElementById('login-email').value;
-    localStorage.setItem('kk-user', JSON.stringify({ email, role: 'buyer' }));
+   const email = document.getElementById('login-email').value;
+   localStorage.setItem('kk-user', JSON.stringify({ email, role: selectedRole })); 
     statusEl.textContent = 'Logged in (demo mode)!';
     updateAuthNav();
   });
@@ -481,7 +480,15 @@ if (signupForm) {
 
     const name = document.getElementById('signup-name').value;
     const email = document.getElementById('signup-email').value;
-    localStorage.setItem('kk-user', JSON.stringify({ name, email, role: 'buyer' }));
+
+    const userData = { name, email, role: selectedRole };
+
+    if (selectedRole === 'artisan') {
+      userData.craft = document.getElementById('signup-craft').value;
+      userData.region = document.getElementById('signup-region').value;
+    }
+
+    localStorage.setItem('kk-user', JSON.stringify(userData));
     statusEl.textContent = 'Account created (demo mode)!';
     updateAuthNav();
   });
@@ -635,6 +642,15 @@ function renderProfilePage() {
   document.getElementById('profile-name').textContent = displayName;
   document.getElementById('profile-email').textContent = user.email;
   document.getElementById('profile-role').textContent = user.role || 'buyer';
+  document.getElementById('profile-role').textContent = user.role || 'buyer';
+
+const craftEl = document.getElementById('profile-craft');
+if (user.craft || user.region) {
+  craftEl.textContent = [user.craft, user.region].filter(Boolean).join(' · ');
+  craftEl.style.display = 'block';
+} else {
+  craftEl.style.display = 'none';
+}
 
   const orders = JSON.parse(localStorage.getItem('kk-orders') || '[]');
   const ordersListEl = document.getElementById('orders-list');
@@ -663,3 +679,39 @@ function renderProfilePage() {
 }
 
 renderProfilePage();
+// ---------- Mobile nav toggle ----------
+const menuToggle = document.getElementById('menu-toggle');
+const navLinksEl = document.getElementById('nav-links');
+
+if (menuToggle && navLinksEl) {
+  menuToggle.addEventListener('click', () => {
+    navLinksEl.classList.toggle('open');
+  });
+
+  // Close the menu automatically after clicking a link
+  navLinksEl.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinksEl.classList.remove('open');
+    });
+  });
+}
+// ---------- Waitlist form (demo mode) ----------
+const waitlistForm = document.getElementById('waitlist-form');
+
+if (waitlistForm) {
+  waitlistForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const statusEl = document.getElementById('form-status');
+    const email = document.getElementById('email').value;
+    const role = document.getElementById('role').value;
+
+    statusEl.textContent = 'Joining...';
+
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    console.log('Waitlist signup (demo mode):', { email, role });
+    statusEl.textContent = "You're on the list! We'll be in touch.";
+    waitlistForm.reset();
+  });
+}
