@@ -11,7 +11,7 @@ const PRODUCTS = [
     name: 'Jaipur blue pottery lamp',
     origin: 'Jaipur, Rajasthan',
     price: 2850,
-    emoji: '🏺',
+    image: 'assets/products/pottery-lamp.jpg',
     description: 'Hand-thrown and glazed using a traditional Persian-influenced technique unique to Jaipur, this lamp is fired without lead, making the glaze both vivid and food-safe. Each piece varies slightly — no two lamps are identical.'
   },
   {
@@ -19,7 +19,7 @@ const PRODUCTS = [
     name: 'Pochampally ikat dupatta',
     origin: 'Bhoodan Pochampally, Telangana',
     price: 2200,
-    emoji: '🧣',
+    image: 'assets/products/ikat-dupatta.jpg',
     description: 'Every thread is tie-dyed before weaving, a technique that lets the pattern emerge only once the fabric is on the loom. This dupatta took approximately three weeks to complete, start to finish.'
   },
   {
@@ -27,8 +27,58 @@ const PRODUCTS = [
     name: 'Channapatna wooden toy train',
     origin: 'Channapatna, Karnataka',
     price: 890,
-    emoji: '🚂',
+    image: 'assets/products/wooden-train.jpg',
     description: 'Carved from local ivory wood and colored with vegetable dyes, this toy follows a GI-tagged craft tradition over 200 years old. Safe for children — the dyes are non-toxic by design.'
+  },
+  {
+    id: '4',
+    name: 'Bagru block-print scarf',
+    origin: 'Bagru, Rajasthan',
+    price: 1350,
+    image: 'assets/products/block-print-scarf.jpg',
+    description: 'Printed using hand-carved wooden blocks and natural dyes made from indigo, turmeric, and pomegranate rind — a technique passed down through Bagru\'s printer families for over 300 years.'
+  },
+  {
+    id: '5',
+    name: 'Handcrafted brass diya set',
+    origin: 'Moradabad, Uttar Pradesh',
+    price: 650,
+    image: 'assets/products/brass-diya.jpg',
+    description: 'Cast and finished entirely by hand in Moradabad\'s brass district, known as the "Brass City of India." Each diya is individually polished, so weight and shine vary slightly piece to piece.'
+  },
+  {
+    id: '6',
+    name: 'Bamboo basket, hand-woven',
+    origin: 'Barpeta, Assam',
+    price: 480,
+    image: 'assets/products/bamboo-basket.jpg',
+    description: 'Woven from locally-sourced bamboo using a technique specific to lower Assam, sturdy enough for daily use and fully biodegradable at the end of its life.'
+  }
+];
+const ARTISANS = [
+  {
+    id: 'a1',
+    name: 'Ramesh Kumhar',
+    craft: 'Blue pottery',
+    origin: 'Jaipur, Rajasthan',
+    image: 'assets/products/pottery-lamp.jpg',
+    story: "Third generation in a family of potters, Ramesh still mixes his glaze by hand using a recipe his grandfather kept in a notebook, not written down anywhere else."
+  },
+  {
+    id: 'a2',
+    name: 'Lakshmi Devi',
+    craft: 'Ikat weaving',
+    origin: 'Bhoodan Pochampally, Telangana',
+    image: 'assets/products/ikat-dupatta.jpg',
+    story: "Lakshmi ties and dyes every thread before it's ever woven — a technique that takes weeks per piece, and one she learned by watching her mother work the loom."
+  },
+  {
+    id: 'a3',
+    name: 'Suresh Gowda',
+    craft: 'Wooden toys',
+    origin: 'Channapatna, Karnataka',
+    image: 'assets/products/wooden-train.jpg',
+    story: "Suresh's toys are still colored with vegetable dye, a tradition Channapatna is known for, and one that's slowly disappearing as plastic toys take over the market."
   }
 ];
 function getCart() {
@@ -540,7 +590,7 @@ function renderProductDetail() {
     return;
   }
 
-  document.getElementById('pd-media').textContent = product.emoji;
+ document.getElementById('pd-media').innerHTML = `<img src="${product.image}" alt="${product.name}">`;
   document.getElementById('pd-origin').textContent = product.origin;
   document.getElementById('pd-name').textContent = product.name;
   document.getElementById('pd-price').textContent = `₹${product.price.toLocaleString('en-IN')}`;
@@ -569,7 +619,7 @@ function renderShopGrid(productsToShow) {
     gridEl.innerHTML = productsToShow.map(product => `
     <article class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
       <a href="product.html?id=${product.id}" class="product-card-link">
-        <div class="product-media">${product.emoji}</div>
+        <div class="product-media"><img src="${product.image}" alt="${product.name}"></div>
         <h3>${product.name}</h3>
         <p class="product-origin">${product.origin}</p>
       </a>
@@ -714,4 +764,50 @@ if (waitlistForm) {
     statusEl.textContent = "You're on the list! We'll be in touch.";
     waitlistForm.reset();
   });
+}
+// ---------- Render explore/story grid ----------
+function renderStoryGrid(artisansToShow) {
+  const gridEl = document.getElementById('story-grid-container');
+  if (!gridEl) return; // not on the explore page
+
+  if (artisansToShow.length === 0) {
+    gridEl.innerHTML = '<p class="no-results">No artisans match your search.</p>';
+    return;
+  }
+
+  gridEl.innerHTML = artisansToShow.map(artisan => `
+    <article class="story-card">
+      <div class="story-media"><img src="${artisan.image}" alt="${artisan.name}"></div>
+      <span class="story-region">${artisan.origin}</span>
+      <h3>${artisan.name} — ${artisan.craft}</h3>
+      <p>${artisan.story}</p>
+    </article>
+  `).join('');
+}
+
+// ---------- Filtering and searching logic for Explore ----------
+function applyExploreFilters() {
+  const searchInput = document.getElementById('artisan-search-input');
+  if (!searchInput) return; // not on the explore page
+
+  const searchTerm = searchInput.value.toLowerCase();
+  const region = document.getElementById('artisan-filter-region').value;
+
+  const results = ARTISANS.filter(artisan => {
+    const matchesSearch =
+      artisan.name.toLowerCase().includes(searchTerm) ||
+      artisan.craft.toLowerCase().includes(searchTerm);
+    const matchesRegion = region === '' || artisan.origin.includes(region);
+    return matchesSearch && matchesRegion;
+  });
+
+  renderStoryGrid(results);
+}
+
+const artisanSearchEl = document.getElementById('artisan-search-input');
+if (artisanSearchEl) {
+  document.getElementById('artisan-search-input').addEventListener('input', applyExploreFilters);
+  document.getElementById('artisan-filter-region').addEventListener('change', applyExploreFilters);
+
+  applyExploreFilters(); // initial render
 }
