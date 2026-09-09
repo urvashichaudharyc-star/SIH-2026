@@ -20,11 +20,68 @@
     <li id="auth-nav-item"><a href="login.html">Log in</a></li>
   </ul>
 </nav>
-  <section id="add-product-header">
+    <section id="add-product-header">
     <h1>Add a new product</h1>
-    <p>Snap a photo — we'll help with the rest.</p>
+    <p>Snap a photo, speak the details, done in under a minute.</p>
   </section>
 
+  <div class="jali-divider" style="max-width: 200px; margin: 0 auto 3rem;"></div>
+
+  <div class="step-flow">
+
+    <div class="step-card">
+      <span class="step-label">Step 1 · Photo</span>
+      <section id="camera-section">
+        <video id="camera-preview" autoplay playsinline></video>
+        <canvas id="photo-canvas" style="display:none;"></canvas>
+        <img id="captured-photo" style="display:none;" alt="Captured product photo">
+
+        <div id="camera-controls">
+          <button id="start-camera">Open camera</button>
+          <button id="capture-photo" style="display:none;">Capture</button>
+          <button id="retake-photo" style="display:none;">Retake</button>
+        </div>
+
+        <p id="camera-status"></p>
+      </section>
+    </div>
+
+    <div class="step-card">
+      <span class="step-label">Step 2 · Voice</span>
+      <section id="voice-section">
+        <h2>Describe it by voice</h2>
+        <p>Tap the mic and speak — in Hindi, English, or your local language.</p>
+
+        <select id="voice-language">
+          <option value="hi-IN">Hindi</option>
+          <option value="en-IN">English (India)</option>
+          <option value="ta-IN">Tamil</option>
+          <option value="bn-IN">Bengali</option>
+        </select>
+
+        <button id="start-mic">🎤 Start speaking</button>
+
+        <textarea id="voice-transcript" rows="4" placeholder="What you say will appear here..."></textarea>
+
+        <p id="mic-status"></p>
+      </section>
+    </div>
+
+    <div class="step-card">
+      <span class="step-label">Step 3 · Details</span>
+      <section id="submit-section">
+        <label for="product-name">Product name</label>
+        <input type="text" id="product-name" placeholder="e.g. Blue pottery lamp">
+
+        <label for="product-price">Price (₹)</label>
+        <input type="number" id="product-price" placeholder="e.g. 1200">
+
+        <button id="submit-product">Submit product</button>
+        <p id="submit-status"></p>
+      </section>
+    </div>
+
+  </div>
   <section id="camera-section">
     <video id="camera-preview" autoplay playsinline></video>
     <canvas id="photo-canvas" style="display:none;"></canvas>
