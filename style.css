@@ -7,6 +7,7 @@
 
 html {
   scroll-behavior: smooth;
+
 }
 
 /* ---------- Design tokens ---------- */
@@ -74,12 +75,16 @@ nav {
 .hero {
   padding: 6rem 2rem;
   max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+
 }
 
 .hero h1 {
   font-size: 2.8rem;
   line-height: 1.15;
   margin-bottom: 1.2rem;
+
 }
 
 .hero p {
@@ -108,6 +113,10 @@ section {
   padding: 5rem 2rem;
   max-width: 1000px;
   margin: 0 auto;
+  
+  font-family: var(--font-body);
+ 
+  
 }
 
 section h2 {
@@ -1202,4 +1211,201 @@ footer {
   outline-offset: 2px;
 }
   outline: none;
+}
+#impact-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--madder);
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 0.3rem;
+}
+
+@media (max-width: 700px) {
+  #impact-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+#why-us {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+#why-us h2 {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.trust-icon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 1rem;
+  color: var(--madder);
+}
+
+.trust-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.trust-item h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.trust-item p {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 700px) {
+  .trust-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+#artisan-cta {
+  background: var(--indigo);
+  color: var(--cotton);
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.artisan-cta-content {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#artisan-cta h2 {
+  color: var(--cotton);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+#artisan-cta p {
+  color: rgba(239, 231, 216, 0.8);
+  margin-bottom: 2rem;
+}
+#about {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.about-image img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 20px 40px -15px rgba(42, 36, 32, 0.25);
+}
+
+.about-kicker {
+  display: block;
+  font-style: italic;
+  color: var(--madder);
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+}
+
+.about-text h2 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+}
+
+.about-text p {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+
+.about-link {
+  color: var(--madder);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--madder);
+  padding-bottom: 2px;
+}
+
+.about-link:hover {
+  color: var(--indigo);
+  border-color: var(--indigo);
+}
+
+@media (max-width: 800px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.step-flow {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.step-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(42, 36, 32, 0.1);
+  border-radius: 4px;
+  padding: 2rem;
+}
+
+.step-label {
+  display: inline-block;
+  font-style: italic;
+  color: var(--madder);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.step-card section {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.step-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.step-card p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
 }
